@@ -9,8 +9,17 @@ export const TaskCards = () => {
     { id: "0", dragabbleId: "item0" },
   ]);
 
+  const reorder = (taskCardsList, startIndex, endIndex) => {
+    const remove = taskCardsList.splice(startIndex, 1);
+    taskCardsList.splice(endIndex, 0, remove[0]);
+  };
+
+  const handleDragEnd = (result) => {
+    reorder(taskCardsList, result.source.index, result.destination.index);
+    setTaskCardsList(taskCardsList);
+  };
   return (
-    <DragDropContext>
+    <DragDropContext onDragEnd={handleDragEnd}>
       <Droppable droppableId="droppable" direction="horizontal">
         {(provided) => (
           <div
